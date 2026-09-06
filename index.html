@@ -19,7 +19,7 @@
     label { cursor: pointer; } .course { margin: 1.25rem 0; }
     .event { padding: .55rem 0; margin: .25rem 0; }
     .event.change { border-left: 4px solid #000; } .event.cancelled { border-left: 4px solid #b33; color: #b33; }
-    .event.normal { opacity: .55; } .event-date { font-weight: 400; } .room { font-weight: 700; white-space: pre-line; } .usual { color: #666; }
+    .event.normal { opacity: .55; } .event-date { font-weight: 400; } .event-course { font-weight: 700; } .room { font-weight: 700; white-space: pre-line; } .usual { color: #666; }
     .week-heading { font-size: 1.15rem; font-weight: 400; margin: 1.75rem 0 .35rem; border-bottom: 2px solid var(--accent); padding-bottom: .25rem; }
     .meta { color: #555; font-size: .9rem; } .empty { color: #555; }
     @media (min-width: 40rem) {
@@ -39,11 +39,11 @@
   <main id="events"></main>
   <script>
     const DATA = {
-  "generatedAt": "2026-09-06T23:51:34.287668+02:00",
+  "generatedAt": "2026-09-06T23:56:38.220474+02:00",
   "courses": [
     {
       "code": "UM4PY101",
-      "name": "Mécanique quantique — CF",
+      "name": "Mécanique quantique – CF",
       "label": "MQ-CF",
       "opaque": false,
       "slots": [
@@ -114,7 +114,7 @@
     },
     {
       "code": "UM4PY102",
-      "name": "Mécanique quantique — CE",
+      "name": "Mécanique quantique – CE",
       "label": "MQ-CE",
       "opaque": false,
       "slots": [
@@ -206,7 +206,7 @@
     },
     {
       "code": "UM4PY103",
-      "name": "Mécanique quantique — BA",
+      "name": "Mécanique quantique – BA",
       "label": "MQ-BA",
       "opaque": false,
       "slots": [
@@ -235,7 +235,7 @@
     },
     {
       "code": "UM4PY104",
-      "name": "Physique statistique — CF",
+      "name": "Physique statistique – CF",
       "label": "PhyStat-CF",
       "opaque": false,
       "slots": [
@@ -486,7 +486,7 @@
     },
     {
       "code": "UM4PY126",
-      "name": "Physique statistique — ACE",
+      "name": "Physique statistique – ACE",
       "label": "PhyStat-ACE",
       "opaque": false,
       "slots": [
@@ -495,7 +495,7 @@
           "start": "09:00",
           "end": "10:30",
           "session": "Cours",
-          "room": "Amphi Herpin"
+          "room": "Amphi 56A"
         },
         {
           "day": "lu",
@@ -690,8 +690,8 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "Amphi 56A",
-      "usualRoom": "Amphi Herpin",
-      "note": "CHANGE (usual: Amphi Herpin)",
+      "usualRoom": "Amphi 56A",
+      "note": "",
       "cancelled": false,
       "opaque": false
     },
@@ -1506,8 +1506,8 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "Amphi 56A",
-      "usualRoom": "Amphi Herpin",
-      "note": "CHANGE (usual: Amphi Herpin)",
+      "usualRoom": "Amphi 56A",
+      "note": "",
       "cancelled": false,
       "opaque": false
     },
@@ -2370,8 +2370,8 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "Amphi 56A",
-      "usualRoom": "Amphi Herpin",
-      "note": "CHANGE (usual: Amphi Herpin)",
+      "usualRoom": "Amphi 56A",
+      "note": "",
       "cancelled": false,
       "opaque": false
     },
@@ -3222,8 +3222,8 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "Amphi 56A",
-      "usualRoom": "Amphi Herpin",
-      "note": "CHANGE (usual: Amphi Herpin)",
+      "usualRoom": "Amphi 56A",
+      "note": "",
       "cancelled": false,
       "opaque": false
     },
@@ -4086,8 +4086,8 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "Amphi 56A",
-      "usualRoom": "Amphi Herpin",
-      "note": "CHANGE (usual: Amphi Herpin)",
+      "usualRoom": "Amphi 56A",
+      "note": "",
       "cancelled": false,
       "opaque": false
     },
@@ -4938,8 +4938,8 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "Amphi 56A",
-      "usualRoom": "Amphi Herpin",
-      "note": "CHANGE (usual: Amphi Herpin)",
+      "usualRoom": "Amphi 56A",
+      "note": "",
       "cancelled": false,
       "opaque": false
     },
@@ -5790,7 +5790,7 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "",
-      "usualRoom": "Amphi Herpin",
+      "usualRoom": "Amphi 56A",
       "note": "cancelled",
       "cancelled": true,
       "opaque": false
@@ -6642,7 +6642,7 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "",
-      "usualRoom": "Amphi Herpin",
+      "usualRoom": "Amphi 56A",
       "note": "cancelled",
       "cancelled": true,
       "opaque": false
@@ -7494,8 +7494,8 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "Amphi Herpin",
-      "usualRoom": "Amphi Herpin",
-      "note": "",
+      "usualRoom": "Amphi 56A",
+      "note": "CHANGE (usual: Amphi 56A)",
       "cancelled": false,
       "opaque": false
     },
@@ -8346,8 +8346,8 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "Amphi Herpin",
-      "usualRoom": "Amphi Herpin",
-      "note": "",
+      "usualRoom": "Amphi 56A",
+      "note": "CHANGE (usual: Amphi 56A)",
       "cancelled": false,
       "opaque": false
     },
@@ -9198,8 +9198,8 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "Amphi Herpin",
-      "usualRoom": "Amphi Herpin",
-      "note": "",
+      "usualRoom": "Amphi 56A",
+      "note": "CHANGE (usual: Amphi 56A)",
       "cancelled": false,
       "opaque": false
     },
@@ -10050,8 +10050,8 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "Amphi Herpin",
-      "usualRoom": "Amphi Herpin",
-      "note": "",
+      "usualRoom": "Amphi 56A",
+      "note": "CHANGE (usual: Amphi 56A)",
       "cancelled": false,
       "opaque": false
     },
@@ -10902,8 +10902,8 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "Amphi Herpin",
-      "usualRoom": "Amphi Herpin",
-      "note": "",
+      "usualRoom": "Amphi 56A",
+      "note": "CHANGE (usual: Amphi 56A)",
       "cancelled": false,
       "opaque": false
     },
@@ -11754,7 +11754,7 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "",
-      "usualRoom": "Amphi Herpin",
+      "usualRoom": "Amphi 56A",
       "note": "cancelled",
       "cancelled": true,
       "opaque": false
@@ -12606,8 +12606,8 @@
       "summary": "UM4PY126 PhyStat ACE Cours",
       "session": "Cours",
       "room": "Amphi 56A",
-      "usualRoom": "Amphi Herpin",
-      "note": "CHANGE (usual: Amphi Herpin)",
+      "usualRoom": "Amphi 56A",
+      "note": "",
       "cancelled": false,
       "opaque": false
     },
@@ -13492,22 +13492,25 @@
         const article = document.createElement("article");
         const changed = event.note.startsWith("CHANGE") || event.note === "no room";
         article.className = "event " + (event.cancelled ? "cancelled" : changed ? "change" : event.opaque ? "" : "normal");
-        const title = event.cancelled ? "Annulé: " : "";
         let room = event.cancelled ? "prévu: " + (event.usualRoom || "—") : (event.room || event.usualRoom || "—");
         if (!event.cancelled && event.note.startsWith("CHANGE")) room = event.room ? "calendrier: " + event.room + "\nprévu: " + event.usualRoom : "pas de salle (prévu: " + event.usualRoom + ")";
         const heading = document.createElement("div");
         const date = document.createElement("span");
         date.className = "event-date";
-        date.textContent = title + formatDate(event.start);
-        heading.append(date, " · ", event.session);
+        date.textContent = formatDate(event.start);
+        const course = DATA.courses.find(course => course.code === event.code);
+        const courseElement = document.createElement("span");
+        courseElement.className = "event-course";
+        courseElement.textContent = course ? course.name : event.code;
+        if (event.cancelled) {
+          const cancelled = document.createElement("strong");
+          cancelled.textContent = "Annulé: ";
+          heading.append(cancelled);
+        }
+        heading.append(date, " · ", courseElement, event.session ? " · " : "", event.session);
         const roomElement = document.createElement("div");
         roomElement.className = "room";
         roomElement.textContent = room;
-        const course = DATA.courses.find(course => course.code === event.code);
-        const courseElement = document.createElement("span");
-        courseElement.className = "course";
-        courseElement.textContent = course ? course.name : event.code;
-        heading.append(" · ", courseElement);
         article.append(heading, roomElement);
         events.append(article);
       });
