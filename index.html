@@ -18,6 +18,7 @@
     fieldset { border: 1px solid #bbb; border-radius: 4px; display: grid; gap: .6rem; padding: .75rem; }
     label { cursor: pointer; } .course { margin: 1.25rem 0; }
     .event { padding: .55rem 0; margin: .25rem 0; }
+    .event.change, .event.cancelled { padding-left: .75rem; }
     .event.change { border-left: 4px solid #000; } .event.cancelled { border-left: 4px solid #b33; color: #b33; }
     .event.normal { opacity: .55; } .event-date { font-weight: 400; } .event-course { font-weight: 700; } .room { font-weight: 700; white-space: pre-line; } .usual { color: #666; }
     .week-heading { font-size: 1.15rem; font-weight: 400; margin: 1.75rem 0 .35rem; border-bottom: 2px solid var(--accent); padding-bottom: .25rem; }
@@ -39,7 +40,7 @@
   <main id="events"></main>
   <script>
     const DATA = {
-  "generatedAt": "2026-09-06T23:56:38.220474+02:00",
+  "generatedAt": "2026-09-07T00:00:54.234082+02:00",
   "courses": [
     {
       "code": "UM4PY101",
@@ -13504,10 +13505,11 @@
         courseElement.textContent = course ? course.name : event.code;
         if (event.cancelled) {
           const cancelled = document.createElement("strong");
-          cancelled.textContent = "Annulé: ";
+          cancelled.textContent = "Annulé:";
           heading.append(cancelled);
+          heading.append(document.createElement("br"));
         }
-        heading.append(date, " · ", courseElement, event.session ? " · " : "", event.session);
+        heading.append(date, document.createElement("br"), courseElement, event.session ? " · " : "", event.session);
         const roomElement = document.createElement("div");
         roomElement.className = "room";
         roomElement.textContent = room;
