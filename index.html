@@ -39,7 +39,7 @@
   <main id="events"></main>
   <script>
     const DATA = {
-  "generatedAt": "2026-09-06T23:49:07.059036+02:00",
+  "generatedAt": "2026-09-06T23:51:34.287668+02:00",
   "courses": [
     {
       "code": "UM4PY101",
@@ -13503,6 +13503,11 @@
         const roomElement = document.createElement("div");
         roomElement.className = "room";
         roomElement.textContent = room;
+        const course = DATA.courses.find(course => course.code === event.code);
+        const courseElement = document.createElement("span");
+        courseElement.className = "course";
+        courseElement.textContent = course ? course.name : event.code;
+        heading.append(" · ", courseElement);
         article.append(heading, roomElement);
         events.append(article);
       });
