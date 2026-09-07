@@ -38,12 +38,13 @@
   <p class="meta">Sorbonne PHYSIQUE M1 · données générées le <span id="generated"></span></p>
   <details id="course-config">
     <summary>Cours à afficher</summary>
+    <button type="button" id="toggle-courses" aria-controls="courses"></button>
     <fieldset id="courses"></fieldset>
   </details>
   <main id="events"></main>
   <script>
     const DATA = {
-  "generatedAt": "2026-09-07T00:16:26.165266+02:00",
+  "generatedAt": "2026-09-07T10:49:55.660563+02:00",
   "courses": [
     {
       "code": "UM4PY101",
@@ -675,114 +676,6 @@
     }
   ],
   "events": [
-    {
-      "start": "2026-09-07T08:30:00+02:00",
-      "end": "2026-09-07T12:45:00+02:00",
-      "code": "UM4PY104",
-      "summary": "UM4PY104 PhyStat CF Cours",
-      "session": "PhyStat CF Cours",
-      "room": "Amphi 56B",
-      "usualRoom": "Amphi 56B",
-      "note": "",
-      "cancelled": false,
-      "opaque": false
-    },
-    {
-      "start": "2026-09-07T09:00:00+02:00",
-      "end": "2026-09-07T10:30:00+02:00",
-      "code": "UM4PY126",
-      "summary": "UM4PY126 PhyStat ACE Cours",
-      "session": "Cours",
-      "room": "Amphi 56A",
-      "usualRoom": "Amphi 56A",
-      "note": "",
-      "cancelled": false,
-      "opaque": false
-    },
-    {
-      "start": "2026-09-07T10:45:00+02:00",
-      "end": "2026-09-07T12:15:00+02:00",
-      "code": "UM4PY104",
-      "summary": "UM4PY104 PhyStat CF TD gr1",
-      "session": "PhyStat CF TD gr1",
-      "room": "",
-      "usualRoom": "salle 312 couloir 24-34",
-      "note": "cancelled",
-      "cancelled": true,
-      "opaque": false
-    },
-    {
-      "start": "2026-09-07T10:45:00+02:00",
-      "end": "2026-09-07T12:15:00+02:00",
-      "code": "UM4PY104",
-      "summary": "UM4PY104 PhyStat CF TD gr2",
-      "session": "PhyStat CF TD gr2",
-      "room": "",
-      "usualRoom": "salle 112 couloir 56-66",
-      "note": "cancelled",
-      "cancelled": true,
-      "opaque": false
-    },
-    {
-      "start": "2026-09-07T10:45:00+02:00",
-      "end": "2026-09-07T12:15:00+02:00",
-      "code": "UM4PY104",
-      "summary": "UM4PY104 PhyStat CF TD gr3",
-      "session": "PhyStat CF TD gr3",
-      "room": "",
-      "usualRoom": "salle 102 couloir 46-56",
-      "note": "cancelled",
-      "cancelled": true,
-      "opaque": false
-    },
-    {
-      "start": "2026-09-07T10:45:00+02:00",
-      "end": "2026-09-07T12:15:00+02:00",
-      "code": "UM4PY126",
-      "summary": "UM4PY126 PhyStat ACE TD gr1",
-      "session": "TD gr1",
-      "room": "salle 107 couloir 13-14",
-      "usualRoom": "salle 107 couloir 13-14",
-      "note": "",
-      "cancelled": false,
-      "opaque": false
-    },
-    {
-      "start": "2026-09-07T10:45:00+02:00",
-      "end": "2026-09-07T12:15:00+02:00",
-      "code": "UM4PY126",
-      "summary": "UM4PY126 PhyStat ACE TD gr2",
-      "session": "TD gr2",
-      "room": "salle 208 couloir 14-24",
-      "usualRoom": "salle 208 couloir 14-24",
-      "note": "",
-      "cancelled": false,
-      "opaque": false
-    },
-    {
-      "start": "2026-09-07T10:45:00+02:00",
-      "end": "2026-09-07T12:15:00+02:00",
-      "code": "UM4PY126",
-      "summary": "UM4PY126 PhyStat ACE TD gr3",
-      "session": "TD gr3",
-      "room": "salle 112 couloir 14-24",
-      "usualRoom": "salle 112 couloir 14-24",
-      "note": "",
-      "cancelled": false,
-      "opaque": false
-    },
-    {
-      "start": "2026-09-07T10:45:00+02:00",
-      "end": "2026-09-07T12:15:00+02:00",
-      "code": "UM4PY126",
-      "summary": "UM4PY126 PhyStat ACE TD gr4",
-      "session": "TD gr4",
-      "room": "salle 106 couloir 14-24",
-      "usualRoom": "salle 106 couloir 14-24",
-      "note": "",
-      "cancelled": false,
-      "opaque": false
-    },
     {
       "start": "2026-09-07T13:45:00+02:00",
       "end": "2026-09-07T15:45:00+02:00",
@@ -13446,16 +13339,24 @@
   ]
 };
     const params = new URLSearchParams(location.search);
-    const selected = new Set((params.get("courses") || DATA.courses.map(c => c.code).join(",")).split(",").filter(Boolean));
+    const selected = new Set((params.has("courses") ? params.get("courses") : DATA.courses.map(c => c.code).join(",")).split(",").filter(Boolean));
     const courses = document.querySelector("#courses");
+    const toggleCourses = document.querySelector("#toggle-courses");
     const events = document.querySelector("#events");
     document.querySelector("#generated").textContent = new Date(DATA.generatedAt).toLocaleString("fr-FR");
+
+    function updateToggle() {
+      const allSelected = DATA.courses.length > 0 && DATA.courses.every(course => selected.has(course.code));
+      toggleCourses.textContent = allSelected ? "Tout désélectionner" : "Tout sélectionner";
+      toggleCourses.setAttribute("aria-label", allSelected ? "Désélectionner tous les cours" : "Sélectionner tous les cours");
+    }
 
     function sync() {
       const value = [...selected].filter(code => DATA.courses.some(c => c.code === code)).join(",");
       const next = new URL(location.href);
-      if (value) next.searchParams.set("courses", value); else next.searchParams.delete("courses");
+      next.searchParams.set("courses", value);
       history.replaceState(null, "", next);
+      updateToggle();
       render();
     }
     DATA.courses.forEach(course => {
@@ -13467,6 +13368,16 @@
       label.append(input, " ", course.name);
       courses.append(label);
     });
+    toggleCourses.addEventListener("click", () => {
+      const allSelected = DATA.courses.length > 0 && DATA.courses.every(course => selected.has(course.code));
+      if (allSelected) selected.clear();
+      else DATA.courses.forEach(course => selected.add(course.code));
+      courses.querySelectorAll('input[type="checkbox"]').forEach(input => {
+        input.checked = selected.has(input.value);
+      });
+      sync();
+    });
+    updateToggle();
     function formatDate(value) {
       return new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" }).format(new Date(value));
     }
