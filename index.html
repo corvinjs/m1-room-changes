@@ -44,7 +44,7 @@
   <main id="events"></main>
   <script>
     const DATA = {
-  "generatedAt": "2026-09-07T19:17:05.933652+02:00",
+  "generatedAt": "2026-09-08T09:37:16.395122+02:00",
   "courses": [
     {
       "code": "UM4PY101",
@@ -676,42 +676,6 @@
     }
   ],
   "events": [
-    {
-      "start": "2026-09-08T08:30:00+02:00",
-      "end": "2026-09-08T12:45:00+02:00",
-      "code": "UM4PY127",
-      "summary": "UM4PY127 MNP",
-      "session": "MNP",
-      "room": "salle à l'UTES salle micro 108",
-      "usualRoom": "salle à l'UTES salle micro 108",
-      "note": "",
-      "cancelled": false,
-      "opaque": false
-    },
-    {
-      "start": "2026-09-08T08:45:00+02:00",
-      "end": "2026-09-08T12:30:00+02:00",
-      "code": "UM4PY110",
-      "summary": "UM4PY110 TCC Cours/TD",
-      "session": "TCC Cours/TD",
-      "room": "salle 203 couloir 54-55",
-      "usualRoom": "salle 203 couloir 54-55",
-      "note": "",
-      "cancelled": false,
-      "opaque": false
-    },
-    {
-      "start": "2026-09-08T09:00:00+02:00",
-      "end": "2026-09-08T12:30:00+02:00",
-      "code": "UM4PY114",
-      "summary": "UM4PY114 Gravitation Cours/TD",
-      "session": "Gravitation Cours/TD",
-      "room": "salle 104 couloir 46-56",
-      "usualRoom": "salle 104 couloir 46-56",
-      "note": "",
-      "cancelled": false,
-      "opaque": false
-    },
     {
       "start": "2026-09-08T10:45:00+02:00",
       "end": "2026-09-08T12:45:00+02:00",
@@ -13347,7 +13311,7 @@
         const article = document.createElement("article");
         const changed = event.note.startsWith("CHANGE") || event.note === "no room";
         article.className = "event " + (event.cancelled ? "cancelled" : changed ? "change" : event.opaque ? "" : "normal");
-        let room = event.cancelled ? "prévu: " + (event.usualRoom || "—") : (event.room || event.usualRoom || "—");
+        let room = event.cancelled ? (event.usualRoom || "—") : (event.room || event.usualRoom || "—");
         if (!event.cancelled && event.note.startsWith("CHANGE")) room = event.room ? "calendrier: " + event.room + "\nprévu: " + event.usualRoom : "pas de salle (prévu: " + event.usualRoom + ")";
         const heading = document.createElement("div");
         const date = document.createElement("span");
