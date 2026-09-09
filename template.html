@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preload" href="/fonts/lmsans10-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/lmsans10-bold.woff2" as="font" type="font/woff2" crossorigin>
+  <title>Changements des salles — Sorbonne PHYSIQUE M1</title>
+  <style>
+    @font-face { font-family: 'LM Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/lmsans10-regular.woff2') format('woff2'); }
+    @font-face { font-family: 'LM Sans'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/lmsans10-bold.woff2') format('woff2'); }
+    :root { color-scheme: light; accent-color: #537c4d; --accent: #537c4d; }
+    body { font-family: 'LM Sans', system-ui, -apple-system, Roboto, Arial, sans-serif; background: white; color: black; max-width: 70rem; margin: 0 auto; padding: .75rem; }
+    ::selection { background: var(--accent); color: #fff; } a { color: var(--accent); }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    button { background: var(--accent); color: #fff; border: 0; padding: .5rem 1rem; border-radius: 4px; cursor: pointer; }
+    button:hover { filter: brightness(.9); }
+    fieldset { border: 1px solid #bbb; border-radius: 4px; display: grid; gap: .6rem; padding: .75rem; }
+    label { cursor: pointer; } .course { margin: 1.25rem 0; }
+    .event { padding: .55rem 0; margin: .25rem 0; }
+    .event.change, .event.cancelled { padding-left: .75rem; }
+    .event.normal { opacity: .55; } .event-date { font-weight: 400; } .event-course { font-weight: 700; } .room { font-weight: 400; white-space: pre-line; } .usual { color: #666; }
+    .event.change { border-left: 4px solid #000; .room { font-weight: 700; }} .event.cancelled { border-left: 4px solid #b33; color: #b33; }
+    .week-heading { font-size: 1.15rem; font-weight: 400; margin: 1.75rem 0 .35rem; border-bottom: 2px solid var(--accent); padding-bottom: .25rem; }
+    .meta { color: #555; font-size: .9rem; } .empty { color: #555; }
+    @media (max-width: 39.99rem) {
+      .event { font-size: .95rem; }
+    }
+    @media (min-width: 40rem) {
+      body { padding: 1rem; }
+      fieldset { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem 1.25rem; }
+      .event { padding: .45rem .75rem; margin: .5rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Changements des salles</h1>
+  <p class="meta">Sorbonne PHYSIQUE M1 · données générées le <span id="generated"></span></p>
+  <details id="course-config">
+    <summary>Cours à afficher</summary>
+    <button type="button" id="toggle-courses" aria-controls="courses"></button>
+    <fieldset id="courses"></fieldset>
+  </details>
+  <main id="events"></main>
+  <script>
+    const DATA = __DATA_JSON__;
+    const params = new URLSearchParams(location.search);
+    const selected = new Set((params.has("courses") ? params.get("courses") : DATA.courses.map(c => c.code).join(",")).split(",").filter(Boolean));
+    const courses = document.querySelector("#courses");
+    const toggleCourses = document.querySelector("#toggle-courses");
+    const events = document.querySelector("#events");
+    document.querySelector("#generated").textContent = new Date(DATA.generatedAt).toLocaleString("fr-FR");
+
+    function updateToggle() {
+      const allSelected = DATA.courses.length > 0 && DATA.courses.every(course => selected.has(course.code));
+      toggleCourses.textContent = allSelected ? "Tout désélectionner" : "Tout sélectionner";
+      toggleCourses.setAttribute("aria-label", allSelected ? "Désélectionner tous les cours" : "Sélectionner tous les cours");
+    }
+
+    function sync() {
+      const value = [...selected].filter(code => DATA.courses.some(c => c.code === code)).join(",");
+      const next = new URL(location.href);
+      next.searchParams.set("courses", value);
+      history.replaceState(null, "", next);
+      updateToggle();
+      render();
+    }
+    DATA.courses.forEach(course => {
+      const label = document.createElement("label");
+      const input = document.createElement("input");
+      input.type = "checkbox"; input.value = course.code; input.checked = selected.has(course.code);
+      input.addEventListener("change", () => input.checked ? selected.add(course.code) : selected.delete(course.code));
+      input.addEventListener("change", sync);
+      label.append(input, " ", course.name);
+      courses.append(label);
+    });
+    toggleCourses.addEventListener("click", () => {
+      const allSelected = DATA.courses.length > 0 && DATA.courses.every(course => selected.has(course.code));
+      if (allSelected) selected.clear();
+      else DATA.courses.forEach(course => selected.add(course.code));
+      courses.querySelectorAll('input[type="checkbox"]').forEach(input => {
+        input.checked = selected.has(input.value);
+      });
+      sync();
+    });
+    updateToggle();
+    function formatDate(value) {
+      return new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" }).format(new Date(value));
+    }
+    function weekStart(value) {
+      const date = new Date(value);
+      date.setHours(0, 0, 0, 0);
+      date.setDate(date.getDate() - (date.getDay() + 6) % 7);
+      return date;
+    }
+    function formatWeek(value) {
+      return "Semaine du " + new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long" }).format(weekStart(value));
+    }
+    function render() {
+      events.replaceChildren();
+      const now = Date.now();
+      const upcoming = DATA.events.filter(event => new Date(event.end).getTime() > now);
+      const visible = upcoming.filter(event => selected.has(event.code));
+      if (!visible.length) { events.innerHTML = '<p class="empty">Aucun cours à venir pour cette sélection.</p>'; return; }
+      let currentWeek = "";
+      visible.forEach(event => {
+        const week = weekStart(event.start).toISOString().slice(0, 10);
+        if (week !== currentWeek) {
+          const weekHeading = document.createElement("h2");
+          weekHeading.className = "week-heading";
+          weekHeading.textContent = formatWeek(event.start);
+          events.append(weekHeading);
+          currentWeek = week;
+        }
+        const article = document.createElement("article");
+        const changed = event.note.startsWith("CHANGE") || event.note === "no room";
+        article.className = "event " + (event.cancelled ? "cancelled" : changed ? "change" : event.opaque ? "" : "normal");
+        let room = event.cancelled ? (event.usualRoom || "—") : (event.room || event.usualRoom || "—");
+        if (!event.cancelled && event.note.startsWith("CHANGE")) room = event.room ? "calendrier: " + event.room + "\nprévu: " + event.usualRoom : "pas de salle (prévu: " + event.usualRoom + ")";
+        const heading = document.createElement("div");
+        const date = document.createElement("span");
+        date.className = "event-date";
+        date.textContent = formatDate(event.start);
+        const course = DATA.courses.find(course => course.code === event.code);
+        const courseElement = document.createElement("span");
+        courseElement.className = "event-course";
+        courseElement.textContent = course ? course.name : event.code;
+        if (event.cancelled) {
+          const cancelled = document.createElement("strong");
+          cancelled.textContent = "Annulé:";
+          heading.append(cancelled);
+          heading.append(document.createElement("br"));
+        }
+        heading.append(date, document.createElement("br"), courseElement, event.session ? " · " : "", event.session);
+        const roomElement = document.createElement("div");
+        roomElement.className = "room";
+        roomElement.textContent = room;
+        article.append(heading, roomElement);
+        events.append(article);
+      });
+    }
+    render();
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") render();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,512 @@
+# Complete PHYSIQUE M1 course list for the 2026/27 semester.
+# This is intentionally separate from settings.toml: the local report may
+# contain personal group filters, while the public site must know every course.
+output = "static-site-output.txt"
+min_interval_hours = 0
+calendar_display = "Sorbonne PHYSIQUE M1"
+include_exams = false
+groups = []
+
+[[courses]]
+code = "UM4PY101"
+name = "Mécanique quantique CF (12 ETCS)"
+label = "MQ-CF"
+[[courses.slots]]
+day = "ma"
+start = "13:45"
+end = "15:45"
+session = "Cours"
+room = "salle 107 couloir 14-24"
+[[courses.slots]]
+day = "ma"
+start = "16:00"
+end = "18:00"
+session = "TD gr1"
+room = "salle 103 couloir 14-15"
+[[courses.slots]]
+day = "ma"
+start = "16:00"
+end = "18:00"
+session = "TD gr2"
+room = "salle 108 couloir 14-15"
+[[courses.slots]]
+day = "me"
+start = "13:45"
+end = "15:45"
+session = "Cours"
+room = "Amphi 55A"
+[[courses.slots]]
+day = "me"
+start = "16:00"
+end = "18:00"
+session = "TD gr1"
+room = "salle 102 couloir 14-15"
+[[courses.slots]]
+day = "me"
+start = "16:00"
+end = "18:00"
+session = "TD gr2"
+room = "salle 103 couloir 14-15"
+[[courses.slots]]
+day = "je"
+start = "08:30"
+end = "10:30"
+session = "Cours"
+room = "salle 103 couloir 56-66"
+[[courses.slots]]
+day = "je"
+start = "10:45"
+end = "12:45"
+session = "TD gr1"
+room = "salle 103 couloir 14-15"
+[[courses.slots]]
+day = "je"
+start = "10:45"
+end = "12:45"
+session = "TD gr2"
+room = "salle 112 couloir 56-66"
+
+[[courses]]
+code = "UM4PY102"
+name = "Mécanique quantique CE (9 ETCS)"
+label = "MQ-CE"
+[[courses.slots]]
+day = "ma"
+start = "13:45"
+end = "15:45"
+session = "Cours"
+room = "Amphi 56B"
+[[courses.slots]]
+day = "ma"
+start = "16:00"
+end = "18:00"
+session = "TD gr1"
+room = "salle 104 couloir 14-15"
+[[courses.slots]]
+day = "ma"
+start = "16:00"
+end = "18:00"
+session = "TD gr2"
+room = "salle 103 couloir 23-24"
+[[courses.slots]]
+day = "ma"
+start = "16:00"
+end = "18:00"
+session = "TD gr3"
+room = "salle 106 couloir 14-15"
+[[courses.slots]]
+day = "me"
+start = "13:45"
+end = "15:45"
+session = "TD gr1"
+room = "salle 102 couloir 14-15"
+[[courses.slots]]
+day = "me"
+start = "13:45"
+end = "15:45"
+session = "TD gr2"
+room = "salle 103 couloir 14-15"
+[[courses.slots]]
+day = "me"
+start = "13:45"
+end = "15:45"
+session = "TD gr3"
+room = "salle 104 couloir 14-15"
+[[courses.slots]]
+day = "me"
+start = "16:00"
+end = "18:00"
+session = "Cours"
+room = "Amphi 56B"
+[[courses.slots]]
+day = "je"
+start = "08:30"
+end = "10:30"
+session = "TD gr1"
+room = "salle 102 couloir 14-15"
+[[courses.slots]]
+day = "je"
+start = "08:30"
+end = "10:30"
+session = "TD gr2"
+room = "salle 103 couloir 14-15"
+[[courses.slots]]
+day = "je"
+start = "08:30"
+end = "10:30"
+session = "TD gr3"
+room = "salle 104 couloir 14-15"
+[[courses.slots]]
+day = "je"
+start = "10:45"
+end = "12:45"
+session = "Cours"
+room = "Amphi 56A"
+
+[[courses]]
+code = "UM4PY103"
+name = "Mécanique quantique BA (6 ETCS)"
+label = "MQ-BA"
+[[courses.slots]]
+day = "ma"
+start = "13:45"
+end = "17:00"
+session = "Cours"
+room = "salle 103 couloir 56-66"
+[[courses.slots]]
+day = "je"
+start = "09:00"
+end = "12:15"
+session = "TD gr1"
+room = "salle 105 couloir 14-15"
+[[courses.slots]]
+day = "je"
+start = "09:00"
+end = "12:15"
+session = "TD gr2"
+room = "salle 106 couloir 14-15"
+
+[[courses]]
+code = "UM4PY104"
+name = "Physique statistique CF (9 ETCS)"
+label = "PhyStat-CF"
+[[courses.slots]]
+day = "lu"
+start = "08:30"
+end = "12:45"
+session = "Cours"
+room = "Amphi 56B"
+[[courses.slots]]
+day = "lu"
+start = "10:45"
+end = "12:15"
+session = "TD gr1"
+room = "salle 312 couloir 24-34"
+[[courses.slots]]
+day = "lu"
+start = "10:45"
+end = "12:15"
+session = "TD gr2"
+room = "salle 112 couloir 56-66"
+[[courses.slots]]
+day = "lu"
+start = "10:45"
+end = "12:15"
+session = "TD gr3"
+room = "salle 102 couloir 46-56"
+[[courses.slots]]
+day = "me"
+start = "08:30"
+end = "10:30"
+session = "TD"
+room = ""
+[[courses.slots]]
+day = "me"
+start = "10:45"
+end = "12:45"
+session = "Cours"
+room = "Amphi 56B"
+
+[[courses]]
+code = "UM4PY107"
+name = "Physique expérimentale 1"
+label = "PhysExp"
+opaque = true
+[[courses.slots]]
+day = "ve"
+start = "10:45"
+end = "18:00"
+session = ""
+room = ""
+
+[[courses]]
+code = "UM4PY110"
+name = "Théorie classique des champs"
+label = "TCC"
+[[courses.slots]]
+day = "ma"
+start = "08:45"
+end = "12:30"
+session = "Cours/TD"
+room = "salle 203 couloir 54-55"
+
+[[courses]]
+code = "UM4PY113"
+name = "Relativité et temps"
+label = "Relativité"
+[[courses.slots]]
+day = "lu"
+start = "13:45"
+end = "15:45"
+session = "Cours"
+room = "salle 101 couloir 14-24"
+[[courses.slots]]
+day = "lu"
+start = "16:00"
+end = "18:00"
+session = "TD gr1"
+room = "salle 108 couloir 14-24"
+[[courses.slots]]
+day = "lu"
+start = "16:00"
+end = "18:00"
+session = "TD gr2"
+room = "salle 116 couloir 46-56"
+
+[[courses]]
+code = "UM4PY114"
+name = "Gravitation"
+label = "Gravitation"
+[[courses.slots]]
+day = "ma"
+start = "09:00"
+end = "12:30"
+session = "Cours/TD"
+room = "salle 104 couloir 46-56"
+
+[[courses]]
+code = "UM4PY115"
+name = "Intelligence artificielle"
+label = "IA"
+[[courses.slots]]
+day = "lu"
+start = "13:45"
+end = "16:45"
+session = "Cours"
+room = "Salle 108 - couloir 24-25"
+[[courses.slots]]
+day = "ve"
+start = "13:45"
+end = "17:45"
+session = "TP"
+room = "salles 109 et 111 couloir 22-23"
+
+[[courses]]
+code = "UM4PY116"
+name = "Initiation à la pratique du travail"
+label = "IPT"
+[[courses.slots]]
+day = "je"
+start = "13:45"
+end = "18:00"
+session = ""
+room = "salle 32-33 111"
+
+[[courses]]
+code = "UM4PY117"
+name = "Chimie pour l'agrégation"
+label = "Chimie"
+[[courses.slots]]
+day = "je"
+start = "13:45"
+end = "15:45"
+session = ""
+room = "salle 103 couloir 14-15"
+
+[[courses]]
+code = "UM4PY120"
+name = "UE de perfectionnement MQ"
+label = "UE perf MQ"
+[[courses.slots]]
+day = "ve"
+start = "13:45"
+end = "14:45"
+session = ""
+room = "salle 102 couloir 14-15"
+
+[[courses]]
+code = "UM4PY121"
+name = "UE de perfectionnement MQ"
+label = "UE perf MQ"
+[[courses.slots]]
+day = "ve"
+start = "13:45"
+end = "14:45"
+session = ""
+room = "salle 103 couloir 14-15"
+
+[[courses]]
+code = "UE4PY130"
+name = "Pratique de la demande scientifique"
+label = "Demande scientifique"
+[[courses.slots]]
+day = "me"
+start = "09:15"
+end = "10:15"
+session = ""
+room = "salle 102 couloir 14-15"
+
+[[courses]]
+code = "UM4PY122"
+name = "Physique du vivant"
+label = "Physique du vivant"
+[[courses.slots]]
+day = "lu"
+start = "13:45"
+end = "17:00"
+session = "Cours/TD"
+room = "salle 205 couloir 14-24"
+
+[[courses]]
+code = "UM4PY123"
+name = "Physique des plasmas"
+label = "Plasmas"
+[[courses.slots]]
+day = "je"
+start = "13:45"
+end = "17:15"
+session = "Cours/TD"
+room = "salle 205 couloir 14-24"
+
+[[courses]]
+code = "UM4PY126"
+name = "Physique statistique ACE (6 ETCS)"
+label = "PhyStat-ACE"
+[[courses.slots]]
+day = "lu"
+start = "09:00"
+end = "10:30"
+session = "Cours"
+room = "Amphi 56A"
+[[courses.slots]]
+day = "lu"
+start = "10:45"
+end = "12:15"
+session = "TD gr1"
+room = "salle 107 couloir 13-14"
+[[courses.slots]]
+day = "lu"
+start = "10:45"
+end = "12:15"
+session = "TD gr2"
+room = "salle 208 couloir 14-24"
+[[courses.slots]]
+day = "lu"
+start = "10:45"
+end = "12:15"
+session = "TD gr3"
+room = "salle 112 couloir 14-24"
+[[courses.slots]]
+day = "lu"
+start = "10:45"
+end = "12:15"
+session = "TD gr4"
+room = "salle 106 couloir 14-24"
+[[courses.slots]]
+day = "me"
+start = "09:00"
+end = "10:30"
+session = "TD gr1"
+room = "salle 101 couloir 56-66"
+[[courses.slots]]
+day = "me"
+start = "09:00"
+end = "10:30"
+session = "TD gr2"
+room = "salle 101 couloir 23-24"
+[[courses.slots]]
+day = "me"
+start = "09:00"
+end = "10:30"
+session = "TD gr3"
+room = "salle 207 couloir 14-24"
+[[courses.slots]]
+day = "me"
+start = "09:00"
+end = "10:30"
+session = "TD gr4"
+room = "salle 201 couloir 14-24"
+[[courses.slots]]
+day = "me"
+start = "10:45"
+end = "12:15"
+session = "Cours"
+room = "Amphi 56A"
+
+[[courses]]
+code = "UM4PY127"
+name = "Méthodes numériques pour la physique"
+label = "MNP"
+[[courses.slots]]
+day = "ma"
+start = "08:30"
+end = "12:45"
+session = ""
+room = "salle à l'UTES salle micro 108"
+[[courses.slots]]
+day = "ve"
+start = "08:30"
+end = "10:30"
+session = "gr1"
+room = "salle à l'UTES salle micro 108"
+[[courses.slots]]
+day = "ve"
+start = "08:30"
+end = "10:30"
+session = "gr2"
+room = "salle à l'UTES salle micro 108"
+[[courses.slots]]
+day = "ve"
+start = "08:30"
+end = "10:30"
+session = "gr3"
+room = "salle à l'UTES salle micro 115"
+[[courses.slots]]
+day = "ve"
+start = "10:45"
+end = "12:45"
+session = "gr1"
+room = "salle à l'UTES salle micro RC 17"
+[[courses.slots]]
+day = "ve"
+start = "10:45"
+end = "12:45"
+session = "gr2"
+room = "salle à l'UTES salle micro 108"
+
+[[courses]]
+code = "UM4PYOIP"
+name = "Insertion professionnelle"
+label = "OIP"
+[[courses.slots]]
+day = "lu"
+start = "13:45"
+end = "15:45"
+session = "gr1"
+room = "salle 107 couloir 13-14"
+[[courses.slots]]
+day = "lu"
+start = "13:45"
+end = "15:45"
+session = "gr2"
+room = "salle 202 couloir 54-55"
+[[courses.slots]]
+day = "lu"
+start = "13:45"
+end = "15:45"
+session = "gr3"
+room = "salle 104 couloir 14-15"
+[[courses.slots]]
+day = "me"
+start = "13:45"
+end = "15:45"
+session = "gr4"
+room = "salle 312 couloir 24-34"
+[[courses.slots]]
+day = "je"
+start = "13:45"
+end = "15:45"
+session = "gr6"
+room = "salle 105 couloir 55-65"
+[[courses.slots]]
+day = "ve"
+start = "08:45"
+end = "10:45"
+session = "gr7"
+room = "salle 210 couloir 14-24"
+[[courses.slots]]
+day = "ve"
+start = "11:00"
+end = "13:00"
+session = "gr8"
+room = "salle 210 couloir 14-24"
