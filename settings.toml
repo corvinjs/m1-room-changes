@@ -208,10 +208,74 @@ session = "Cours"
 room = "Amphi 56B"
 
 [[courses]]
+code = "UM4PY126"
+name = "Physique statistique ACE (6 ETCS)"
+label = "PhyStat-ACE"
+[[courses.slots]]
+day = "lu"
+start = "09:00"
+end = "10:30"
+session = "Cours"
+room = "Amphi 56A"
+[[courses.slots]]
+day = "lu"
+start = "10:45"
+end = "12:15"
+session = "TD gr1"
+room = "salle 107 couloir 13-14"
+[[courses.slots]]
+day = "lu"
+start = "10:45"
+end = "12:15"
+session = "TD gr2"
+room = "salle 208 couloir 14-24"
+[[courses.slots]]
+day = "lu"
+start = "10:45"
+end = "12:15"
+session = "TD gr3"
+room = "salle 112 couloir 14-24"
+[[courses.slots]]
+day = "lu"
+start = "10:45"
+end = "12:15"
+session = "TD gr4"
+room = "salle 106 couloir 14-24"
+[[courses.slots]]
+day = "me"
+start = "09:00"
+end = "10:30"
+session = "TD gr1"
+room = "salle 101 couloir 56-66"
+[[courses.slots]]
+day = "me"
+start = "09:00"
+end = "10:30"
+session = "TD gr2"
+room = "salle 101 couloir 23-24"
+[[courses.slots]]
+day = "me"
+start = "09:00"
+end = "10:30"
+session = "TD gr3"
+room = "salle 207 couloir 14-24"
+[[courses.slots]]
+day = "me"
+start = "09:00"
+end = "10:30"
+session = "TD gr4"
+room = "salle 201 couloir 14-24"
+[[courses.slots]]
+day = "me"
+start = "10:45"
+end = "12:15"
+session = "Cours"
+room = "Amphi 56A"
+
+[[courses]]
 code = "UM4PY107"
 name = "Physique expérimentale 1"
 label = "PhysExp"
-opaque = true
 [[courses.slots]]
 day = "ve"
 start = "10:45"
@@ -357,71 +421,6 @@ start = "13:45"
 end = "17:15"
 session = "Cours/TD"
 room = "salle 205 couloir 14-24"
-
-[[courses]]
-code = "UM4PY126"
-name = "Physique statistique ACE (6 ETCS)"
-label = "PhyStat-ACE"
-[[courses.slots]]
-day = "lu"
-start = "09:00"
-end = "10:30"
-session = "Cours"
-room = "Amphi 56A"
-[[courses.slots]]
-day = "lu"
-start = "10:45"
-end = "12:15"
-session = "TD gr1"
-room = "salle 107 couloir 13-14"
-[[courses.slots]]
-day = "lu"
-start = "10:45"
-end = "12:15"
-session = "TD gr2"
-room = "salle 208 couloir 14-24"
-[[courses.slots]]
-day = "lu"
-start = "10:45"
-end = "12:15"
-session = "TD gr3"
-room = "salle 112 couloir 14-24"
-[[courses.slots]]
-day = "lu"
-start = "10:45"
-end = "12:15"
-session = "TD gr4"
-room = "salle 106 couloir 14-24"
-[[courses.slots]]
-day = "me"
-start = "09:00"
-end = "10:30"
-session = "TD gr1"
-room = "salle 101 couloir 56-66"
-[[courses.slots]]
-day = "me"
-start = "09:00"
-end = "10:30"
-session = "TD gr2"
-room = "salle 101 couloir 23-24"
-[[courses.slots]]
-day = "me"
-start = "09:00"
-end = "10:30"
-session = "TD gr3"
-room = "salle 207 couloir 14-24"
-[[courses.slots]]
-day = "me"
-start = "09:00"
-end = "10:30"
-session = "TD gr4"
-room = "salle 201 couloir 14-24"
-[[courses.slots]]
-day = "me"
-start = "10:45"
-end = "12:15"
-session = "Cours"
-room = "Amphi 56A"
 
 [[courses]]
 code = "UM4PY127"
