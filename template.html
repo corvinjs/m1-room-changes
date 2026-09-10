@@ -84,8 +84,10 @@
       sync();
     });
     updateToggle();
-    function formatDate(value) {
-      return new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" }).format(new Date(value));
+    function formatDate(start, end) {
+      const date = new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long" }).format(new Date(start));
+      const time = new Intl.DateTimeFormat("fr-FR", { hour: "2-digit", minute: "2-digit" });
+      return `${date}, ${time.format(new Date(start))} - ${time.format(new Date(end))}`;
     }
     function weekStart(value) {
       const date = new Date(value);
@@ -120,7 +122,7 @@
         const heading = document.createElement("div");
         const date = document.createElement("span");
         date.className = "event-date";
-        date.textContent = formatDate(event.start);
+        date.textContent = formatDate(event.start, event.end);
         const course = DATA.courses.find(course => course.code === event.code);
         const courseElement = document.createElement("span");
         courseElement.className = "event-course";
