@@ -16,7 +16,7 @@
     button { background: var(--accent); color: #fff; border: 0; padding: .5rem 1rem; border-radius: 4px; cursor: pointer; }
     button:hover { filter: brightness(.9); }
     fieldset { border: 1px solid #bbb; border-radius: 4px; display: grid; gap: .6rem; padding: .75rem; }
-    label { cursor: pointer; } .course-option { display: grid; gap: .35rem; } .group-options { border: 0; display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin: 0 0 0 1.5rem; padding: .5rem; } .group-options[hidden] { display: none; }
+    label { cursor: pointer; } .course-option { display: grid; gap: .35rem; } .group-options { border: 0; display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin: 0 0 0 1.5rem; padding: .2rem 0; } .group-options[hidden] { display: none; }
     .event { padding: .55rem 0; margin: .25rem 0; }
     .event.change, .event.cancelled { padding-left: .75rem; }
     .event.normal { opacity: .55; } .event-date { font-weight: 400; } .event-course { font-weight: 700; } .room { font-weight: 400; white-space: pre-line; } .usual { color: #666; }
@@ -109,15 +109,15 @@
         const groupOptions = document.createElement("fieldset");
         groupOptions.className = "group-options";
         groupOptions.setAttribute("aria-label", `Groupe pour ${course.name}`);
-        for (const group of ["all", ...availableGroups]) {
+        for (const group of ["tous", ...availableGroups]) {
           const groupLabel = document.createElement("label");
           const groupInput = document.createElement("input");
           groupInput.type = "radio";
           groupInput.name = `group-${course.code}`;
           groupInput.value = group;
-          groupInput.checked = (groupSelections.get(course.code) || "all") === group;
+          groupInput.checked = (groupSelections.get(course.code) || "tous") === group;
           groupInput.addEventListener("change", () => {
-            if (group === "all") groupSelections.delete(course.code);
+            if (group === "tous") groupSelections.delete(course.code);
             else groupSelections.set(course.code, group);
             sync();
           });
