@@ -7,6 +7,9 @@ calendar_display = "Sorbonne PHYSIQUE M1"
 include_exams = false
 groups = []
 
+[[vacation_weeks]]
+start = "2026-10-26"
+
 [[courses]]
 code = "UM4PY101"
 name = "Mécanique quantique CF (12 ETCS)"

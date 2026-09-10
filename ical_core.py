@@ -38,6 +38,11 @@ class Course:
 
 
 @dataclass
+class VacationWeek:
+    start: str  # ISO date (Monday) of the vacation week
+
+
+@dataclass
 class Settings:
     output: Path
     min_interval_hours: float
@@ -46,6 +51,7 @@ class Settings:
     include_exams: bool
     groups: list[int]
     courses: list[Course]
+    vacation_weeks: list[VacationWeek]
 
     @property
     def codes(self) -> tuple[str, ...]:
@@ -81,6 +87,10 @@ def load_settings(path: Path = ROOT / "settings.toml") -> Settings:
                 opaque=bool(item.get("opaque", False)),
             )
         )
+    vacation_weeks = [
+        VacationWeek(start=item["start"])
+        for item in raw.get("vacation_weeks", [])
+    ]
     return Settings(
         output=Path(raw["output"]).expanduser(),
         min_interval_hours=float(raw.get("min_interval_hours", 20)),
@@ -93,6 +103,7 @@ def load_settings(path: Path = ROOT / "settings.toml") -> Settings:
         include_exams=bool(raw.get("include_exams", False)),
         groups=[int(g) for g in raw.get("groups", [])],
         courses=courses,
+        vacation_weeks=vacation_weeks,
     )
 
 

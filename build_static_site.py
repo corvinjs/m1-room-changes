@@ -158,7 +158,13 @@ def build_payload(ics: str, settings: core.Settings) -> dict:
         for occurrence in occurrences
         if occurrence.end > now and occurrence.start < end
     ]
-    return {"generatedAt": now.isoformat(), "courses": courses, "events": events}
+    vacation_weeks = [{"start": week.start} for week in settings.vacation_weeks]
+    return {
+        "generatedAt": now.isoformat(),
+        "courses": courses,
+        "events": events,
+        "vacationWeeks": vacation_weeks,
+    }
 
 
 DATA_RE = re.compile(r"const DATA = (\{.*?\});\n", re.S)
@@ -166,7 +172,11 @@ DATA_RE = re.compile(r"const DATA = (\{.*?\});\n", re.S)
 
 def semantic_payload(payload: dict) -> dict:
     """Return the page data without volatile metadata."""
-    return {"courses": payload["courses"], "events": payload["events"]}
+    return {
+        "courses": payload["courses"],
+        "events": payload["events"],
+        "vacationWeeks": payload.get("vacationWeeks", []),
+    }
 
 
 def payload_digest(payload: dict) -> str:
