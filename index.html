@@ -45,7 +45,7 @@
   <main id="events"></main>
   <script>
     const DATA = {
-  "generatedAt": "2026-09-10T11:44:23.297156+02:00",
+  "generatedAt": "2026-09-10T11:49:25.754230+02:00",
   "courses": [
     {
       "code": "UM4PY101",
@@ -5994,6 +5994,11 @@
       "opaque": false
     },
     {
+      "start": "2026-10-26",
+      "end": "2026-11-02",
+      "vacation": true
+    },
+    {
       "start": "2026-11-02T08:30:00+01:00",
       "end": "2026-11-02T10:30:00+01:00",
       "code": "UM4PY104",
@@ -11909,13 +11914,6 @@
       "cancelled": false,
       "opaque": false
     }
-  ],
-  "vacations": [
-    {
-      "start": "2026-10-26",
-      "end": "2026-11-02",
-      "label": "Vacances"
-    }
   ]
 };
     const params = new URLSearchParams(location.search);
@@ -12031,17 +12029,9 @@
     function render() {
       events.replaceChildren();
       const now = Date.now();
-      DATA.vacations.filter(vacation => new Date(vacation.end) > now).forEach(vacation => {
-        const heading = document.createElement("h2");
-        heading.className = "week-heading";
-        heading.textContent = formatWeek(vacation.start);
-        const notice = document.createElement("p");
-        notice.className = "vacation";
-        notice.textContent = "Vacances — aucun cours cette semaine.";
-        events.append(heading, notice);
-      });
       const upcoming = DATA.events.filter(event => new Date(event.end).getTime() > now);
       const visible = upcoming.filter(event => {
+        if (event.vacation) return true;
         if (!selected.has(event.code)) return false;
         const group = groupSelections.get(event.code);
         return !group || event.session.toLowerCase().includes("cours") || new RegExp(`\\b${group}\\b`, "i").test(event.session);
@@ -12056,6 +12046,13 @@
           weekHeading.textContent = formatWeek(event.start);
           events.append(weekHeading);
           currentWeek = week;
+        }
+        if (event.vacation) {
+          const notice = document.createElement("p");
+          notice.className = "vacation";
+          notice.textContent = "Vacances — aucun cours cette semaine.";
+          events.append(notice);
+          return;
         }
         const article = document.createElement("article");
         const changed = event.note.startsWith("CHANGE") || event.note === "no room";

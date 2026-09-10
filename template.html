@@ -158,17 +158,9 @@
     function render() {
       events.replaceChildren();
       const now = Date.now();
-      DATA.vacations.filter(vacation => new Date(vacation.end) > now).forEach(vacation => {
-        const heading = document.createElement("h2");
-        heading.className = "week-heading";
-        heading.textContent = formatWeek(vacation.start);
-        const notice = document.createElement("p");
-        notice.className = "vacation";
-        notice.textContent = "Vacances — aucun cours cette semaine.";
-        events.append(heading, notice);
-      });
       const upcoming = DATA.events.filter(event => new Date(event.end).getTime() > now);
       const visible = upcoming.filter(event => {
+        if (event.vacation) return true;
         if (!selected.has(event.code)) return false;
         const group = groupSelections.get(event.code);
         return !group || event.session.toLowerCase().includes("cours") || new RegExp(`\\b${group}\\b`, "i").test(event.session);
@@ -183,6 +175,13 @@
           weekHeading.textContent = formatWeek(event.start);
           events.append(weekHeading);
           currentWeek = week;
+        }
+        if (event.vacation) {
+          const notice = document.createElement("p");
+          notice.className = "vacation";
+          notice.textContent = "Vacances — aucun cours cette semaine.";
+          events.append(notice);
+          return;
         }
         const article = document.createElement("article");
         const changed = event.note.startsWith("CHANGE") || event.note === "no room";

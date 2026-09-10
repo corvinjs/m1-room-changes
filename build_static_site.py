@@ -135,11 +135,11 @@ def build_payload(ics: str, settings: core.Settings) -> dict:
     core.annotate(occurrences, settings)
     now = datetime.now(core.PARIS)
     end = now + timedelta(days=120)
-    vacations = [
+    vacation_events = [
         {
             "start": week.isoformat(),
             "end": (week + timedelta(days=7)).isoformat(),
-            "label": "Vacances",
+            "vacation": True,
         }
         for week in settings.vacation_weeks
         if week_start(week) == week and week + timedelta(days=7) > now.date() and week < end.date()
@@ -179,11 +179,12 @@ def build_payload(ics: str, settings: core.Settings) -> dict:
         for occurrence in occurrences
         if occurrence.end > now and occurrence.start < end
     ]
+    events.extend(vacation_events)
+    events.sort(key=lambda event: event["start"])
     return {
         "generatedAt": now.isoformat(),
         "courses": courses,
         "events": events,
-        "vacations": vacations,
     }
 
 

@@ -39,6 +39,13 @@ UID:test-vacation
 SUMMARY:UM4PY101 Cours
 LOCATION:salle 101
 END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Europe/Paris:20261102T090000
+DTEND;TZID=Europe/Paris:20261102T100000
+UID:test-after-vacation
+SUMMARY:UM4PY101 Cours
+LOCATION:salle 101
+END:VEVENT
 END:VCALENDAR
 """
         with patch(
@@ -48,12 +55,14 @@ END:VCALENDAR
             clock.now.return_value = datetime(2026, 9, 10, tzinfo=core.PARIS)
             payload = build_static_site.build_payload(ics, settings)
 
-        self.assertEqual(payload["events"], [])
-        self.assertEqual(payload["vacations"], [{
+        self.assertEqual(len(payload["events"]), 2)
+        self.assertEqual(payload["events"][0], {
             "start": "2026-10-26",
             "end": "2026-11-02",
-            "label": "Vacances",
-        }])
+            "vacation": True,
+        })
+        self.assertEqual(payload["events"][1]["start"], "2026-11-02T09:00:00+01:00")
+        self.assertNotIn("vacation", payload["events"][1])
 
 
 if __name__ == "__main__":
