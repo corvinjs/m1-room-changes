@@ -1,11 +1,7 @@
 # Complete PHYSIQUE M1 course list for the 2026/27 semester.
-# This is intentionally separate from settings.toml: the local report may
-# contain personal group filters, while the public site must know every course.
-output = "static-site-output.txt"
-min_interval_hours = 0
+calendar_remote_id = "https://calendar.google.com/calendar/ical/masterm1physique%40gmail.com/public/basic.ics"
 calendar_display = "Sorbonne PHYSIQUE M1"
 include_exams = false
-groups = []
 
 [[vacation_weeks]]
 start = "2026-10-26"

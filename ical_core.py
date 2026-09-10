@@ -92,8 +92,8 @@ def load_settings(path: Path = ROOT / "settings.toml") -> Settings:
         for item in raw.get("vacation_weeks", [])
     ]
     return Settings(
-        output=Path(raw["output"]).expanduser(),
-        min_interval_hours=float(raw.get("min_interval_hours", 20)),
+        output=Path(raw.get("output", "static-site-output.txt")).expanduser(),
+        min_interval_hours=float(raw.get("min_interval_hours", 0)),
         calendar_remote_id=raw.get(
             "calendar_remote_id",
             "https://calendar.google.com/calendar/ical/"

@@ -6,7 +6,6 @@ MARKER="# m1-room-changes"
 LINE="17 */4 * * * $ROOT/cron.sh run >>$ROOT/cron.log 2>&1"
 LOCK="$ROOT/.lock"
 SITE_ROOT="${M1_SITE_ROOT:-/mnt/win/Code/corvin.sydow.ch}"
-ICS_URL="https://calendar.google.com/calendar/ical/masterm1physique%40gmail.com/public/basic.ics"
 
 install() {
   local tmp
@@ -30,43 +29,12 @@ remove() {
 run() {
   exec 9>"$LOCK"
   flock -n 9 || exit 0
-  cd "$ROOT"
-
-  ICS_TMP="$(mktemp)"
-  HTML_TMP="$(mktemp)"
-  trap 'rm -f "$ICS_TMP" "$HTML_TMP"' EXIT
-
-  /usr/bin/curl --fail --silent --show-error --location \
-    --connect-timeout 10 --max-time 60 "$ICS_URL" -o "$ICS_TMP"
-  test -s "$ICS_TMP"
 
   test -d "$SITE_ROOT/.git"
-  /usr/bin/python3 "$ROOT/build_static_site.py" "$ICS_TMP" "$HTML_TMP" \
-    --canonical-ics "$ICS_TMP"
-  if /usr/bin/python3 "$ROOT/build_static_site.py" "$ICS_TMP" \
-    --data-unchanged --compare-with "$ROOT/index.html" --candidate "$HTML_TMP"; then
-    echo "calendar data unchanged"
-  else
-    /usr/bin/install -m 0644 "$HTML_TMP" "$ROOT/index.html"
-    (
-      cd "$ROOT"
-      git add index.html
-      git commit -m "Update calendar snapshot"
-    )
-  fi
+  "$ROOT/scripts/update-site.sh"
 
-  CHILD_AHEAD="$(
-    cd "$ROOT"
-    git rev-list --count '@{u}..HEAD' 2>/dev/null || echo 0
-  )"
-  PARENT_AHEAD="$(
-    cd "$SITE_ROOT"
-    git rev-list --count '@{u}..HEAD' 2>/dev/null || echo 0
-  )"
-  if [ "$CHILD_AHEAD" -gt 0 ] || [ "$PARENT_AHEAD" -gt 0 ]; then
-    echo "calendar push incomplete; retrying on the next run" >&2
-    exit 1
-  fi
+  bash "$ROOT/scripts/wait-for-push.sh" "$ROOT"
+  bash "$ROOT/scripts/wait-for-push.sh" "$SITE_ROOT"
 }
 
 case "${1:-}" in

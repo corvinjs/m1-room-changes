@@ -45,7 +45,7 @@
   <main id="events"></main>
   <script>
     const DATA = {
-  "generatedAt": "2026-09-10T12:02:36.368837+02:00",
+  "generatedAt": "2026-09-10T12:23:10.989647+02:00",
   "courses": [
     {
       "code": "UM4PY101",
@@ -677,30 +677,6 @@
     }
   ],
   "events": [
-    {
-      "start": "2026-09-10T09:00:00+02:00",
-      "end": "2026-09-10T12:15:00+02:00",
-      "code": "UM4PY103",
-      "summary": "UM4PY103 MQ-BA TD gr1",
-      "session": "MQ-BA TD gr1",
-      "room": "salle 105 couloir 14-15",
-      "usualRoom": "salle 105 couloir 14-15",
-      "note": "",
-      "cancelled": false,
-      "opaque": false
-    },
-    {
-      "start": "2026-09-10T09:00:00+02:00",
-      "end": "2026-09-10T12:15:00+02:00",
-      "code": "UM4PY103",
-      "summary": "UM4PY103 MQ-BA TD gr2",
-      "session": "MQ-BA TD gr2",
-      "room": "salle 106 couloir 14-15",
-      "usualRoom": "salle 106 couloir 14-15",
-      "note": "",
-      "cancelled": false,
-      "opaque": false
-    },
     {
       "start": "2026-09-10T10:45:00+02:00",
       "end": "2026-09-10T12:45:00+02:00",
@@ -12757,16 +12733,15 @@
   ]
 };
     const params = new URLSearchParams(location.search);
-    const validGroups = new Set(["gr1", "gr2", "gr3", "gr4"]);
     const selected = new Set();
     const groupSelections = new Map();
     function groupsForCourse(course) {
       const groups = new Set();
       for (const slot of course.slots || []) {
-        const match = slot.session.match(/\bgr\s*([1-4])\b/i);
+        const match = slot.session.match(/\bgr\s*(\d+)\b/i);
         if (match) groups.add(`gr${match[1]}`);
       }
-      return [...validGroups].filter(group => groups.has(group));
+      return [...groups].sort((a, b) => Number(a.slice(2)) - Number(b.slice(2)));
     }
     const courseValue = params.has("courses") ? params.get("courses") : DATA.courses.map(c => c.code).join(",");
     for (const entry of courseValue.split(",")) {

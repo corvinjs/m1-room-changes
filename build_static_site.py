@@ -7,8 +7,6 @@ import argparse
 import hashlib
 import json
 import re
-import subprocess
-import tempfile
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -196,48 +194,20 @@ def extract_payload_from_html(html: str) -> dict:
     return json.loads(match.group(1))
 
 
-def _diff_has_substantive_changes(diff_text: str) -> bool:
-    for line in diff_text.splitlines():
-        if not line or line[0] not in "+-":
-            continue
-        if line.startswith("+++") or line.startswith("---"):
-            continue
-        if "generatedAt" in line:
-            continue
-        return True
-    return False
-
-
-def html_diff_is_cosmetic_only(old_html: str, new_html: str) -> bool:
-    """True when a git diff only touches the generatedAt timestamp."""
-    if old_html == new_html:
-        return True
-    with tempfile.TemporaryDirectory() as tmpdir:
-        old_path = Path(tmpdir) / "old.html"
-        new_path = Path(tmpdir) / "new.html"
-        old_path.write_text(old_html, encoding="utf-8")
-        new_path.write_text(new_html, encoding="utf-8")
-        result = subprocess.run(
-            ["git", "diff", "--no-index", "-U0", "--", str(old_path), str(new_path)],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-    if result.returncode == 0:
-        return True
-    return not _diff_has_substantive_changes(result.stdout)
-
-
 def data_unchanged(
     compare_with: Path,
     candidate_html: str,
 ) -> bool:
     if not compare_with.is_file():
         return False
-    return html_diff_is_cosmetic_only(
-        compare_with.read_text(encoding="utf-8"),
-        candidate_html,
-    )
+    try:
+        old_digest = payload_digest(extract_payload_from_html(
+            compare_with.read_text(encoding="utf-8")
+        ))
+        new_digest = payload_digest(extract_payload_from_html(candidate_html))
+    except ValueError:
+        return False
+    return old_digest == new_digest
 
 
 def render(payload: dict) -> str:
@@ -274,23 +244,26 @@ def main() -> None:
     parser.add_argument(
         "--data-unchanged",
         action="store_true",
-        help="exit 0 when git diff vs --compare-with only changes generatedAt",
+        help="exit 0 when embedded page data matches --compare-with",
     )
     args = parser.parse_args()
-    ics = canonicalize_ics(args.ics.read_text(encoding="utf-8"))
-    if args.canonical_ics:
-        args.canonical_ics.write_text(ics, encoding="utf-8")
-    settings = core.load_settings(args.config)
     if args.data_unchanged:
         if not args.compare_with:
             parser.error("--data-unchanged requires --compare-with")
         if args.candidate:
             candidate_html = args.candidate.read_text(encoding="utf-8")
-        elif args.output:
-            candidate_html = render(build_payload(ics, settings))
         else:
-            parser.error("--data-unchanged requires --candidate or output")
+            ics = canonicalize_ics(args.ics.read_text(encoding="utf-8"))
+            settings = core.load_settings(args.config)
+            if args.output:
+                candidate_html = render(build_payload(ics, settings))
+            else:
+                parser.error("--data-unchanged requires --candidate or output")
         raise SystemExit(0 if data_unchanged(args.compare_with, candidate_html) else 1)
+    ics = canonicalize_ics(args.ics.read_text(encoding="utf-8"))
+    if args.canonical_ics:
+        args.canonical_ics.write_text(ics, encoding="utf-8")
+    settings = core.load_settings(args.config)
     if not args.output:
         if not args.canonical_ics:
             parser.error("output is required unless --canonical-ics or --data-unchanged is given")

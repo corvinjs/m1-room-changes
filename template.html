@@ -46,16 +46,15 @@
   <script>
     const DATA = __DATA_JSON__;
     const params = new URLSearchParams(location.search);
-    const validGroups = new Set(["gr1", "gr2", "gr3", "gr4"]);
     const selected = new Set();
     const groupSelections = new Map();
     function groupsForCourse(course) {
       const groups = new Set();
       for (const slot of course.slots || []) {
-        const match = slot.session.match(/\bgr\s*([1-4])\b/i);
+        const match = slot.session.match(/\bgr\s*(\d+)\b/i);
         if (match) groups.add(`gr${match[1]}`);
       }
-      return [...validGroups].filter(group => groups.has(group));
+      return [...groups].sort((a, b) => Number(a.slice(2)) - Number(b.slice(2)));
     }
     const courseValue = params.has("courses") ? params.get("courses") : DATA.courses.map(c => c.code).join(",");
     for (const entry of courseValue.split(",")) {
