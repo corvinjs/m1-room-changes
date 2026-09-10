@@ -6,7 +6,7 @@ import re
 import tomllib
 from collections import defaultdict
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -45,6 +45,7 @@ class Settings:
     calendar_display: str
     include_exams: bool
     groups: list[int]
+    vacation_weeks: tuple[date, ...]
     courses: list[Course]
 
     @property
@@ -92,6 +93,7 @@ def load_settings(path: Path = ROOT / "settings.toml") -> Settings:
         calendar_display=raw.get("calendar_display", "Sorbonne PHYSIQUE M1"),
         include_exams=bool(raw.get("include_exams", False)),
         groups=[int(g) for g in raw.get("groups", [])],
+        vacation_weeks=tuple(date.fromisoformat(day) for day in raw.get("vacation_weeks", [])),
         courses=courses,
     )
 

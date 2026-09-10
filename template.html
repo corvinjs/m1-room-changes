@@ -18,6 +18,7 @@
     fieldset { border: 1px solid #bbb; border-radius: 4px; display: grid; gap: .6rem; padding: .75rem; }
     label { cursor: pointer; } .course-option { display: grid; gap: .35rem; } .group-options { border: 0; display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin: 0 0 0 1.5rem; padding: .2rem 0; } .group-options[hidden] { display: none; }
     .event { padding: .55rem 0; margin: .25rem 0; }
+    .vacation { padding: .75rem; margin: .5rem 0; border-left: 4px solid var(--accent); background: #eef5ec; }
     .event.change, .event.cancelled { padding-left: .75rem; }
     .event.normal { opacity: .55; } .event-date { font-weight: 400; } .event-course { font-weight: 700; } .room { font-weight: 400; white-space: pre-line; } .usual { color: #666; }
     .event.change { border-left: 4px solid #000; .room { font-weight: 700; }} .event.cancelled { border-left: 4px solid #b33; color: #b33; }
@@ -157,6 +158,15 @@
     function render() {
       events.replaceChildren();
       const now = Date.now();
+      DATA.vacations.filter(vacation => new Date(vacation.end) > now).forEach(vacation => {
+        const heading = document.createElement("h2");
+        heading.className = "week-heading";
+        heading.textContent = formatWeek(vacation.start);
+        const notice = document.createElement("p");
+        notice.className = "vacation";
+        notice.textContent = "Vacances — aucun cours cette semaine.";
+        events.append(heading, notice);
+      });
       const upcoming = DATA.events.filter(event => new Date(event.end).getTime() > now);
       const visible = upcoming.filter(event => {
         if (!selected.has(event.code)) return false;
