@@ -9,7 +9,7 @@ import json
 import re
 import subprocess
 import tempfile
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import ical_core as core
@@ -88,14 +88,6 @@ def parse_ics(ics: str, settings: core.Settings) -> list[core.EventDef]:
     return events
 
 
-def week_start(day: date) -> date:
-    return day - timedelta(days=day.weekday())
-
-
-def is_vacation(day: date, vacation_weeks: tuple[date, ...]) -> bool:
-    return week_start(day) in vacation_weeks
-
-
 def canonicalize_ics(ics: str) -> str:
     """Return a stable representation of an iCalendar feed.
 
@@ -128,22 +120,9 @@ def canonicalize_ics(ics: str) -> str:
 def build_payload(ics: str, settings: core.Settings) -> dict:
     occurrences = core.expand(parse_ics(ics, settings), settings.include_exams)
     occurrences = [o for o in occurrences if core.keep_occurrence(o, settings, None)]
-    occurrences = [
-        o for o in occurrences
-        if not is_vacation(o.start.date(), settings.vacation_weeks)
-    ]
     core.annotate(occurrences, settings)
     now = datetime.now(core.PARIS)
     end = now + timedelta(days=120)
-    vacation_events = [
-        {
-            "start": week.isoformat(),
-            "end": (week + timedelta(days=7)).isoformat(),
-            "vacation": True,
-        }
-        for week in settings.vacation_weeks
-        if week_start(week) == week and week + timedelta(days=7) > now.date() and week < end.date()
-    ]
     courses = [
         {
             "code": course.code,
@@ -179,13 +158,7 @@ def build_payload(ics: str, settings: core.Settings) -> dict:
         for occurrence in occurrences
         if occurrence.end > now and occurrence.start < end
     ]
-    events.extend(vacation_events)
-    events.sort(key=lambda event: event["start"])
-    return {
-        "generatedAt": now.isoformat(),
-        "courses": courses,
-        "events": events,
-    }
+    return {"generatedAt": now.isoformat(), "courses": courses, "events": events}
 
 
 DATA_RE = re.compile(r"const DATA = (\{.*?\});\n", re.S)

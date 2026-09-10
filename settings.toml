@@ -6,7 +6,6 @@ min_interval_hours = 0
 calendar_display = "Sorbonne PHYSIQUE M1"
 include_exams = false
 groups = []
-vacation_weeks = ["2026-10-26"]
 
 [[courses]]
 code = "UM4PY101"
