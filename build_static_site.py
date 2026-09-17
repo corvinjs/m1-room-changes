@@ -120,6 +120,9 @@ def build_payload(ics: str, settings: core.Settings) -> dict:
     occurrences = [o for o in occurrences if core.keep_occurrence(o, settings, None)]
     core.annotate(occurrences, settings)
     now = datetime.now(core.PARIS)
+    week_start = (now - timedelta(days=now.weekday())).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
     end = now + timedelta(days=120)
     courses = [
         {
@@ -154,7 +157,7 @@ def build_payload(ics: str, settings: core.Settings) -> dict:
             "opaque": occurrence.opaque,
         }
         for occurrence in occurrences
-        if occurrence.end > now and occurrence.start < end
+        if occurrence.start >= week_start and occurrence.start < end
     ]
     vacation_weeks = [{"start": week.start} for week in settings.vacation_weeks]
     return {

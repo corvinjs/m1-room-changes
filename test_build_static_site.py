@@ -6,9 +6,13 @@ from __future__ import annotations
 import json
 import tempfile
 import unittest
+from datetime import datetime
 from pathlib import Path
+from unittest.mock import patch
+from zoneinfo import ZoneInfo
 
 import build_static_site as site
+import ical_core as core
 
 
 class PayloadDigestTests(unittest.TestCase):
@@ -79,6 +83,50 @@ class ExtractPayloadTests(unittest.TestCase):
         extracted = site.extract_payload_from_html(html)
         self.assertEqual(extracted["courses"], payload["courses"])
         self.assertEqual(extracted["vacationWeeks"], payload["vacationWeeks"])
+
+
+class BuildPayloadWindowTests(unittest.TestCase):
+    def test_includes_ended_events_from_current_week(self) -> None:
+        settings = core.Settings(
+            output=Path("out.txt"),
+            min_interval_hours=0,
+            calendar_remote_id="",
+            calendar_display="",
+            include_exams=False,
+            groups=[],
+            courses=[
+                core.Course(
+                    code="UM4PY101",
+                    name="Test",
+                    label="Test",
+                    slots=[],
+                )
+            ],
+            vacation_weeks=[],
+        )
+        ics = """BEGIN:VCALENDAR
+BEGIN:VEVENT
+UID=current-week
+SUMMARY:UM4PY101 Cours
+DTSTART;TZID=Europe/Paris:20260916T100000
+DTEND;TZID=Europe/Paris:20260916T120000
+END:VEVENT
+BEGIN:VEVENT
+UID:previous-week
+SUMMARY:UM4PY101 Cours
+DTSTART;TZID=Europe/Paris:20260913T100000
+DTEND;TZID=Europe/Paris:20260913T120000
+END:VEVENT
+END:VCALENDAR
+"""
+        fixed_now = datetime(2026, 9, 17, 9, tzinfo=ZoneInfo("Europe/Paris"))
+        with patch("build_static_site.datetime") as datetime_class:
+            datetime_class.now.return_value = fixed_now
+            payload = site.build_payload(ics, settings)
+
+        self.assertEqual([event["start"] for event in payload["events"]], [
+            "2026-09-16T10:00:00+02:00",
+        ])
 
 
 if __name__ == "__main__":
