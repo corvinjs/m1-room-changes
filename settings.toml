@@ -419,7 +419,7 @@ day = "je"
 start = "13:45"
 end = "17:15"
 session = "Cours/TD"
-room = "salle 205 couloir 14-24"
+room = "-"
 
 [[courses]]
 code = "UM4PY127"
