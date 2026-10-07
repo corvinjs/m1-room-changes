@@ -7,6 +7,7 @@ import tomllib
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
+from itertools import takewhile
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -225,6 +226,11 @@ class Occurrence:
     runs: list[tuple[datetime, datetime, str]] = field(default_factory=list)
 
 
+def open_ended_horizon(dtstart: datetime) -> datetime:
+    """End of the academic year (31 Aug) for RRULEs without UNTIL/COUNT."""
+    return datetime(academic_year(dtstart) + 1, 8, 31, 23, 59, tzinfo=dtstart.tzinfo)
+
+
 def expand(events: list[EventDef], include_exams: bool) -> list[Occurrence]:
     exceptions: dict[tuple[str, datetime], EventDef] = {}
     masters: list[EventDef] = []
@@ -257,7 +263,13 @@ def expand(events: list[EventDef], include_exams: bool) -> list[Occurrence]:
         starts = [ev.dtstart]
         if ev.rrule:
             try:
-                starts = list(rrulestr(ev.rrule, dtstart=ev.dtstart))
+                rule = rrulestr(ev.rrule, dtstart=ev.dtstart)
+                if re.search(r"\b(UNTIL|COUNT)=", ev.rrule, re.I):
+                    starts = list(rule)
+                else:
+                    # Open-ended series: stop at the end of the academic year.
+                    horizon = open_ended_horizon(ev.dtstart)
+                    starts = list(takewhile(lambda d: d <= horizon, rule))
             except ValueError:
                 starts = [ev.dtstart]
         starts.extend(ev.rdates)

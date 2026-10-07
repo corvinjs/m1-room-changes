@@ -164,6 +164,12 @@ start = "09:00"
 end = "12:15"
 session = "TD gr2"
 room = "salle 106 couloir 14-15"
+[[courses.slots]]
+day = "me"
+start = "13:30"
+end = "17:00"
+session = ""
+room = ""
 
 [[courses]]
 code = "UM4PY104"
@@ -360,11 +366,11 @@ code = "UM4PY117"
 name = "Chimie pour l'agrégation"
 label = "Chimie"
 [[courses.slots]]
-day = "je"
-start = "13:45"
-end = "15:45"
+day = "ve"
+start = "10:45"
+end = "12:45"
 session = ""
-room = "salle 103 couloir 14-15"
+room = ""
 
 [[courses]]
 code = "UM4PY120"
@@ -485,11 +491,11 @@ end = "15:45"
 session = "gr3"
 room = "salle 104 couloir 14-15"
 [[courses.slots]]
-day = "me"
+day = "je"
 start = "13:45"
 end = "15:45"
 session = "gr4"
-room = "salle 312 couloir 24-34"
+room = "salle 220 couloir 23-33"
 [[courses.slots]]
 day = "je"
 start = "13:45"
