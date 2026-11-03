@@ -1,14 +1,17 @@
 # m1-room-changes
 Static GitHub Pages site for Sorbonne PHYSIQUE M1 room changes and cancellations.
 
-Cron every four hours downloads the public Google ICS feed, builds a candidate
+The systemd timer runs every four hours, downloads the public Google ICS feed, builds a candidate
 `index.html`, and compares embedded page data against the current page. Only
 when courses, events, or vacation weeks change does it commit and push the
 submodule, then commit and push the parent site so GitHub Pages rebuilds it.
 
-Install: `./cron.sh install`
-Remove: `./cron.sh remove`
+Install: `./systemd.sh install`
+Remove: `./systemd.sh remove`
 Force a rebuild and publish: `./publish.sh`
+
+Logs are available with:
+`journalctl --user -u m1-room-changes.service`
 
 Set `M1_SITE_ROOT` when the parent site is elsewhere (default:
 `/mnt/win/Code/corvin.sydow.ch`).

@@ -1,6 +1,5 @@
 _site/
 .lock
-cron.log
 __pycache__/
 *.pyc
 *.tmp

@@ -1,0 +1,8 @@
+[Unit]
+Description=Publish m1-room-changes calendar snapshot
+
+[Service]
+Type=oneshot
+WorkingDirectory=@ROOT@
+Environment=M1_SITE_ROOT=@SITE_ROOT@
+ExecStart=/bin/bash @ROOT@/scheduled.sh

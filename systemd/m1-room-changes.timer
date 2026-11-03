@@ -1,0 +1,10 @@
+[Unit]
+Description=Publish m1-room-changes calendar snapshot every four hours
+
+[Timer]
+OnCalendar=*-*-* 00/4:17:00
+Persistent=true
+Unit=m1-room-changes.service
+
+[Install]
+WantedBy=timers.target
