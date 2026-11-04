@@ -7,6 +7,8 @@ FORCE=false
 COMMIT=true
 COMMIT_MSG="Update calendar snapshot"
 
+echo "Updating with latest data..."
+
 while [ $# -gt 0 ]; do
   case "$1" in
     --force)

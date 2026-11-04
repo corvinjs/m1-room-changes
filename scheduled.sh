@@ -3,7 +3,7 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 LOCK="$ROOT/.lock"
-SITE_ROOT="${M1_SITE_ROOT:-/mnt/win/Code/corvin.sydow.ch}"
+SITE_ROOT="$(dirname $ROOT)"
 
 exec 9>"$LOCK"
 flock -n 9 || exit 0
