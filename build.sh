@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+# Usage: ./build.sh [BASEURL] [OUTDIR]   (the page has no absolute links, BASEURL is unused)
 set -euo pipefail
-
-rm -rf _site
-mkdir -p _site
-cp index.html _site/
+cd "$(dirname "$0")"
+out="${2:-_site}"
+mkdir -p "$out"
+cp index.html "$out/"
